@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Поиск</title>
+<!--    подключение css-->
+    <link rel="stylesheet" type="text/css" href="/static/bootstrap/css/bootstrap.css" >
+
+</head>
+<body class="p-3 mb-2 bg-light text-dark">
+<ul class="nav">
+  <li class="nav-item">
+    <a class="nav-link active" href="/index.html">На главную</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="/form.html">Начать поиск</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="/results.html">Результаты</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="/contacts.html">Контакты</a>
+  </li>
+</ul>
+    <h1>Форма для поиска</h1>
+    <!--    form для отправки данных на сервер-->
+    <div class="input-group mb-3">
+    <form action="results.html" method="post">
+<!--        input - поля для ввода данных или кнопки-->
+<!--        type - тип поля, value-его значение, placeholder-подсказка-->
+        <input type="text" name="query_string" value="" placeholder="строка поиска" class="form-control">
+        <br>
+        <br>
+<!--        submit - кнопка-->
+<!--        select - выпадающий список-->
+        <p><select name="where" class="btn btn-secondary dropdown-toggle">
+                <option value="all">Везде</option>
+                <option value="company">В названии компании</option>
+                <option selected value="name">В названии вакансии</option>
+            </select>
+        <input type="submit" value="Искать вакансии" class="btn btn-secondary"></p>
+    </form>
+    </div>
+    <hr>
+
+<div class="alert alert-success" role="alert"><p>
+    Существует два вида языков программирования: одни – все ругают, другими не пользуются
+</p></div>
+
+
+</body>
+</html>
