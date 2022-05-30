@@ -20,7 +20,18 @@ def form():
 
 @app.route("/results.html")
 def results():
-    return render_template('results.html')
+    connect_string = 'sqlite:///sqlite/hh_db_orm.sqlite'
+    rwst = Hh_Requests('')
+    last_request_id = rwst.get_last_request_id(connect_string)
+    print(type(last_request_id), f'last_request_id={last_request_id}')
+    keywords_s = rwst.get_request_by_id(connect_string, last_request_id)
+    print(type(keywords_s), f'last_request_id={keywords_s}')
+    responses = Hh_Responses(0, '', 0, 0)
+    requirements = responses.get_responses(connect_string, last_request_id)
+    print(type(requirements), f'+++requirements={requirements}')
+
+    # return render_template('results.html')
+    return render_template('results.html', data=requirements, keywords=keywords_s)
 
 @app.route("/contacts.html")
 def contacts():
@@ -60,7 +71,7 @@ def run_post():
     # requirements = db.read_skills(connect_string, last_request_id)
     responses = Hh_Responses(0, '', 0, 0)
     requirements = responses.get_responses(connect_string, last_request_id)
-    print(type(requirements), f'+++requirements={requirements}')
+    # print(type(requirements), f'+++requirements={requirements}')
 
     #
     # print (type(data),f'data={data}')

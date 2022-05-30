@@ -62,6 +62,19 @@ class Hh_Requests(Base):
         # print (type(maxid), f'maxid={maxid}')
         return last_request_id
 
+    def get_request_by_id(self, connect_string, request_id):
+        engine = get_engine(connect_string)
+        # Создание сессии
+        # create a configured "Session" class
+        Session = sessionmaker(bind=engine)
+        # create a Session
+        session = Session()
+        for hh_request in session.query(Hh_Requests).filter(Hh_Requests.id ==request_id).all():
+            # print(type(hh_request), f'hh_requests={hh_request}')
+            request = hh_request.keywords
+        return request
+
+
 
 class Hh_Responses(Base):
     __tablename__ = 'hh_responses'
@@ -127,16 +140,19 @@ def create_db(connect_string):
 if __name__ == '__main__':
     connect_string = 'sqlite:///hh_db_orm.sqlite'
     create_db(connect_string)
-    keywords = Hh_Requests('')
-    last_request_id = keywords.set_requests(connect_string, 'NAME:(C++)')
+    hh_requests = Hh_Requests('')
+    keywords = hh_requests.get_request_by_id(connect_string, 4)
+    print (type(keywords), f'keywords={keywords}')
+    # keywords = Hh_Requests('')
+    # last_request_id = keywords.set_requests(connect_string, 'NAME:(C++)')
+    # # print(f'last_request_id={last_request_id}')
+    # responses = Hh_Responses(0,'',0,0)
+    # requirements = [{'name': 'net', 'count': 16, 'persent': 21}, {'name': 'c', 'count': 12, 'persent': 16}]
+    # responses.set_responses(connect_string, last_request_id, requirements)
+    # last_request_id = keywords.get_last_request_id(connect_string)
     # print(f'last_request_id={last_request_id}')
-    responses = Hh_Responses(0,'',0,0)
-    requirements = [{'name': 'net', 'count': 16, 'persent': 21}, {'name': 'c', 'count': 12, 'persent': 16}]
-    responses.set_responses(connect_string, last_request_id, requirements)
-    last_request_id = keywords.get_last_request_id(connect_string)
-    print(f'last_request_id={last_request_id}')
-    requirements = responses.get_responses(connect_string, last_request_id)
-    print(type(requirements), f'requirements={requirements}')
+    # requirements = responses.get_responses(connect_string, last_request_id)
+    # print(type(requirements), f'requirements={requirements}')
 
     # s = keywords.get_requests()
     # print(type(s), f's={s}')
